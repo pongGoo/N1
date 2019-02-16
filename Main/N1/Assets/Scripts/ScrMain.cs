@@ -26,17 +26,24 @@ public class ScrMain : MonoBehaviour
 
     void CreatePartition (int ColumnCount)
     {
+        int partitionWidth = Screen.width / ColumnCount;
         
+
         for (int i=0; i < ColumnCount; i++)
         {
             for (int j = 0; j < ColumnCount; j++)
             {
                 partitions[i, j] = new GameObject("partition" + i + "_" + j);
                 SpriteRenderer renderer = partitions[i, j].AddComponent<SpriteRenderer>();
-                renderer.sprite = Sprite.Create(stageImage, new Rect(0,0,stageImage.width, stageImage.height), new Vector2(0.5f, 0.5f), 100.0f);
+                renderer.sprite = Sprite.Create(stageImage, new Rect(0,0,partitionWidth, partitionWidth), new Vector2(0.5f, 0.5f), 100.0f);
+                //partitions[i, j].transform.position = new Vector2(-1 * ColumnCount / 2 * partitionWidth + partitionWidth / 2 + i * partitionWidth, +1 * ColumnCount / 2 * partitionWidth - partitionWidth / 2 - j * partitionWidth);
+                partitions[i, j].transform.position = new Vector2(-1  +  i  , 1  - j);
+
             }
         }
 
     }
+
+
 
 }
