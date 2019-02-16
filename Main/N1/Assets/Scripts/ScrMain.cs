@@ -8,6 +8,7 @@ public class ScrMain : MonoBehaviour
     public int partitionColumnCount;
     public GameObject[,] partitions = new GameObject[4,4];    
     public Texture2D stageImage;
+    public Texture2D borderImage;
 
 
     private void Awake()
@@ -40,7 +41,7 @@ public class ScrMain : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             Debug.Log(Screen.width + ", " + Screen.height);
-            Debug.Log(Screen.currentResolution);
+            Debug.Log((Camera.main.orthographicSize * 2 / Screen.height * Screen.width) );
         }
         /*
         if (Input.GetKeyDown(KeyCode.B))
@@ -54,7 +55,7 @@ public class ScrMain : MonoBehaviour
 
     void CreatePartition (int ColumnCount)
     {
-        float partitionWidth = (Camera.main.orthographicSize * 2 / Screen.height * Screen.width)*100 / ColumnCount;
+        float partitionWidth = (Camera.main.orthographicSize * 2 / Screen.height * Screen.width) / ColumnCount;
         float cameraWidth = (Camera.main.orthographicSize * 2 / Screen.height * Screen.width);
 
         for (int i=0; i < ColumnCount; i++)
@@ -63,9 +64,10 @@ public class ScrMain : MonoBehaviour
             {
                 partitions[i, j] = new GameObject("partition" + i + "_" + j);
                 SpriteRenderer renderer = partitions[i, j].AddComponent<SpriteRenderer>();
-                renderer.sprite = Sprite.Create(stageImage, new Rect(0,0, partitionWidth, partitionWidth), new Vector2(0.5f, 0.5f), 100.0f);
-                //partitions[i, j].transform.position = new Vector2(-1 * ColumnCount / 2 * partitionWidth + partitionWidth / 2 + i * partitionWidth, +1 * ColumnCount / 2 * partitionWidth - partitionWidth / 2 - j * partitionWidth);
-                partitions[i, j].transform.position = new Vector2(-1*cameraWidth/2  +  i * partitionWidth, 1  - j* partitionWidth);
+                renderer.sprite = Sprite.Create(stageImage, new Rect(i * partitionWidth * 100, (ColumnCount -1 - j) * partitionWidth * 100, partitionWidth*100, partitionWidth*100), new Vector2(0.5f, 0.5f), 100.0f);
+                // SpriteRenderer rendererBorder = partitions[i, j].AddComponent<SpriteRenderer>();
+                // renderer.sprite = Sprite.Create(borderImage, new Rect(0, 0, borderImage.width, borderImage.width), new Vector2(0.5f, 0.5f), 100.0f);
+                partitions[i, j].transform.position = new Vector2(-1*cameraWidth/2  + partitionWidth/2+ i * partitionWidth, 2  - j* partitionWidth);
 
             }
         }
