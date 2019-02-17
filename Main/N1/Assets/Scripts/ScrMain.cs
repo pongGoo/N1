@@ -7,8 +7,8 @@ public class ScrMain : MonoBehaviour
 
     public int partitionColumnCount;
     public GameObject[,] partitions = new GameObject[4,4];    
-    public Texture2D stageImage;
-    public Texture2D borderImage;
+    public Texture2D stageImage;    
+    public GameObject boxBorder;   
 
 
     private void Awake()
@@ -21,7 +21,7 @@ public class ScrMain : MonoBehaviour
     {
 
         //Camera.main.orthographicSize = Screen.height / (100.0f * 2.0f);
-        partitionColumnCount = 4;        
+        //partitionColumnCount = 4;        
         CreatePartition(partitionColumnCount);
         Debug.Log(Screen.width + ", " + Screen.height);
         Debug.Log(Screen.currentResolution);
@@ -65,12 +65,23 @@ public class ScrMain : MonoBehaviour
                 partitions[i, j] = new GameObject("partition" + i + "_" + j);
                 SpriteRenderer renderer = partitions[i, j].AddComponent<SpriteRenderer>();
                 renderer.sprite = Sprite.Create(stageImage, new Rect(i * partitionWidth * 100, (ColumnCount -1 - j) * partitionWidth * 100, partitionWidth*100, partitionWidth*100), new Vector2(0.5f, 0.5f), 100.0f);
+                    GameObject border = Instantiate(boxBorder);
+                    border.transform.parent = partitions[i,j].transform;
+                    SpriteRenderer borderRenderer = border.GetComponent<SpriteRenderer>();
+                    borderRenderer.size = new Vector2(partitionWidth, partitionWidth);
+
+
+
                 // SpriteRenderer rendererBorder = partitions[i, j].AddComponent<SpriteRenderer>();
                 // renderer.sprite = Sprite.Create(borderImage, new Rect(0, 0, borderImage.width, borderImage.width), new Vector2(0.5f, 0.5f), 100.0f);
                 partitions[i, j].transform.position = new Vector2(-1*cameraWidth/2  + partitionWidth/2+ i * partitionWidth, 2  - j* partitionWidth);
 
             }
         }
+        Destroy(partitions[ColumnCount-1, ColumnCount-1]);
+
+        // 확인 필요
+        // ScrEmptySlot.SetEmptySlot(ColumnCount - 1, ColumnCount - 1);
 
     }
 
