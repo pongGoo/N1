@@ -8,49 +8,38 @@ public class ScrMain : MonoBehaviour
     public int partitionColumnCount;
     public GameObject[,] partitions = new GameObject[4,4];    
     public Texture2D stageImage;    
-    public GameObject boxBorder;   
+    public GameObject boxBorder;
+
+    ScrEmptySlot emptySlot= new ScrEmptySlot();
 
 
-    private void Awake()
-    {
-        //Screen.SetResolution(900, 1600, false);
-    }
 
     // Start is called before the first frame update
     void Start()
     {
-
-        //Camera.main.orthographicSize = Screen.height / (100.0f * 2.0f);
-        //partitionColumnCount = 4;        
         CreatePartition(partitionColumnCount);
-        Debug.Log(Screen.width + ", " + Screen.height);
-        Debug.Log(Screen.currentResolution);
-
-
-    }
-
-    void ChangeResolution()
-    {
-        Screen.SetResolution(600, 1200, true);
-        Debug.Log("Changed Resolution");
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
+            if (hit != null && hit.collider != null)
+            {
+                Debug.Log("I'm hitting " + hit.collider.name);
+
+            }
+        }
+
+
         if (Input.GetKeyDown(KeyCode.A))
         {
             Debug.Log(Screen.width + ", " + Screen.height);
             Debug.Log((Camera.main.orthographicSize * 2 / Screen.height * Screen.width) );
         }
-        /*
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            ChangeResolution();
-
-        }
-        */       
-
     }
 
     void CreatePartition (int ColumnCount)
@@ -68,7 +57,11 @@ public class ScrMain : MonoBehaviour
                     GameObject border = Instantiate(boxBorder);
                     border.transform.parent = partitions[i,j].transform;
                     SpriteRenderer borderRenderer = border.GetComponent<SpriteRenderer>();
+                    borderRenderer.sortingOrder = 1;
                     borderRenderer.size = new Vector2(partitionWidth, partitionWidth);
+
+                BoxCollider2D boxCollider2D = partitions[i, j].AddComponent<BoxCollider2D>();
+                boxCollider2D.size = new Vector2(partitionWidth, partitionWidth);
 
 
 
@@ -81,7 +74,11 @@ public class ScrMain : MonoBehaviour
         Destroy(partitions[ColumnCount-1, ColumnCount-1]);
 
         // 확인 필요
-        // ScrEmptySlot.SetEmptySlot(ColumnCount - 1, ColumnCount - 1);
+        /*
+        emptySlot.emptyX = ColumnCount - 1;
+        emptySlot.emptyY = ColumnCount - 1;
+        */
+        emptySlot.SetEmptySlot(ColumnCount - 1, ColumnCount - 1);
 
     }
 
