@@ -6,7 +6,8 @@ public class ScrMain : MonoBehaviour
 {
 
     public int partitionColumnCount;
-    public GameObject[,] partitions = new GameObject[4,4];    
+    public ScrPartition[,] partitions = new ScrPartition[4, 4];
+    // public GameObject[,] partitions = new GameObject[4,4];    
     public Texture2D stageImage;    
     public GameObject boxBorder;
 
@@ -51,7 +52,10 @@ public class ScrMain : MonoBehaviour
         {
             for (int j = 0; j < ColumnCount; j++)
             {
-                partitions[i, j] = new GameObject("partition" + i + "_" + j);
+                //partitions[i, j] = new GameObject("partition" + i + "_" + j);
+                //partitions[i, j].gameObject = new GameObject("partition" + i + "_" + j);
+                partitions[i,j].ab
+                partitions[i, j].abcX = new GameObject("partition" + i + "_" + j);
                 SpriteRenderer renderer = partitions[i, j].AddComponent<SpriteRenderer>();
                 renderer.sprite = Sprite.Create(stageImage, new Rect(i * partitionWidth * 100, (ColumnCount -1 - j) * partitionWidth * 100, partitionWidth*100, partitionWidth*100), new Vector2(0.5f, 0.5f), 100.0f);
                     GameObject border = Instantiate(boxBorder);

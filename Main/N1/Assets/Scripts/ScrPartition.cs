@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ScrPartition : MonoBehaviour
 {
+    GameObject gameObject;
+
+    public int abcX;
+
     // Start is called before the first frame update
     void Start()
     {
