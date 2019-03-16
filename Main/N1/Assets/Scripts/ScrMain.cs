@@ -6,19 +6,29 @@ public class ScrMain : MonoBehaviour
 {
 
     public int partitionColumnCount;
-    public ScrPartition[,] partitions = new ScrPartition[4, 4];
+    public ScrPartition scrPartition = new ScrPartition();
     //public GameObject[,] partitions = new GameObject[4,4];    
     public Texture2D stageImage;    
     public GameObject boxBorder;
 
+    public ScrSlot[,] scrSlots = new ScrSlot[4,4];
     ScrEmptySlot emptySlot= new ScrEmptySlot();
+    float partitionWidth;
+    float cameraWidth;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
+        SetSlotPosition();
         CreatePartition(partitionColumnCount);
+    }
+
+
+    void SetSlotPosition()
+    {
+
     }
 
     // Update is called once per frame
@@ -30,50 +40,51 @@ public class ScrMain : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero);
             if (hit != null && hit.collider != null)
             {
-                Debug.Log("I'm hitting " + hit.collider.name);
+                //Debug.Log("I'm hitting " + hit.collider.name);
+                GameObject hittedObject = hit.transform.gameObject;
+                //Debug.Log("hitted object " + hittedObject.transform.root.name);
+                scrPartition.MoveToEmptySlot(hittedObject, emptySlot);
 
+                
             }
+
+
         }
 
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            Debug.Log(Screen.width + ", " + Screen.height);
-            Debug.Log((Camera.main.orthographicSize * 2 / Screen.height * Screen.width) );
+            //Debug.Log(Screen.width + ", " + Screen.height);
+            //Debug.Log((Camera.main.orthographicSize * 2 / Screen.height * Screen.width) );
+
         }
+    }
+
+
+    void SetCameraWidth()
+    {
+        cameraWidth = (Camera.main.orthographicSize * 2 / Screen.height * Screen.width);
+    }
+
+    void SetPartitionWidth(int columnCount)
+    {
+        partitionWidth = cameraWidth / columnCount;
     }
 
     void CreatePartition (int ColumnCount)
     {
-        float partitionWidth = (Camera.main.orthographicSize * 2 / Screen.height * Screen.width) / ColumnCount;
-        float cameraWidth = (Camera.main.orthographicSize * 2 / Screen.height * Screen.width);
+
+        SetCameraWidth();
+        SetPartitionWidth(ColumnCount);
 
         for (int i=0; i < ColumnCount; i++)
         {
             for (int j = 0; j < ColumnCount; j++)
             {
-                partitions[i, j] = new ScrPartition();
-                partitions[i, j].Initiate(ColumnCount, partitionWidth, cameraWidth, stageImage, boxBorder, i, j);
+                scrPartition = new ScrPartition();
+                scrPartition.Initiate(ColumnCount, partitionWidth, cameraWidth, stageImage, boxBorder, i, j);
 
-                /*
-                partitions[i, j] = new GameObject("partition" + i + "_" + j);
-                SpriteRenderer renderer = partitions[i, j].AddComponent<SpriteRenderer>();
-                renderer.sprite = Sprite.Create(stageImage, new Rect(i * partitionWidth * 100, (ColumnCount -1 - j) * partitionWidth * 100, partitionWidth*100, partitionWidth*100), new Vector2(0.5f, 0.5f), 100.0f);
-                    GameObject border = Instantiate(boxBorder);
-                    border.transform.parent = partitions[i,j].transform;
-                    SpriteRenderer borderRenderer = border.GetComponent<SpriteRenderer>();
-                    borderRenderer.sortingOrder = 1;
-                    borderRenderer.size = new Vector2(partitionWidth, partitionWidth);
-
-                BoxCollider2D boxCollider2D = partitions[i, j].AddComponent<BoxCollider2D>();
-                boxCollider2D.size = new Vector2(partitionWidth, partitionWidth);
-
-
-
-                // SpriteRenderer rendererBorder = partitions[i, j].AddComponent<SpriteRenderer>();
-                // renderer.sprite = Sprite.Create(borderImage, new Rect(0, 0, borderImage.width, borderImage.width), new Vector2(0.5f, 0.5f), 100.0f);
-                partitions[i, j].transform.position = new Vector2(-1*cameraWidth/2  + partitionWidth/2+ i * partitionWidth, 2  - j* partitionWidth);
-                */
+       
 
                 if (i==ColumnCount-1 && j== ColumnCount-1-1)
                 {
@@ -82,13 +93,7 @@ public class ScrMain : MonoBehaviour
 
             }
         }
-        //Destroy(partitions[ColumnCount-1, ColumnCount-1]);
 
-        // 확인 필요
-        /*
-        emptySlot.emptyX = ColumnCount - 1;
-        emptySlot.emptyY = ColumnCount - 1;
-        */
         emptySlot.SetEmptySlot(ColumnCount - 1, ColumnCount - 1);
 
     }

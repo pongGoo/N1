@@ -1,9 +1,11 @@
 ﻿<Properties StartupConfiguration="{8182A575-129C-EA2C-78A5-77EF215C977D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ScrPartition.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ScrMain.cs">
     <Files>
-      <File FileName="Assets/Scripts/ScrEmptySlot.cs" Line="13" Column="1" />
-      <File FileName="Assets/Scripts/ScrMain.cs" Line="56" Column="1" />
-      <File FileName="Assets/Scripts/ScrPartition.cs" Line="32" Column="52" />
+      <File FileName="Assets/Scripts/ScrEmptySlot.cs" Line="7" Column="1" />
+      <File FileName="Assets/Scripts/ScrMain.cs" Line="77" Column="26" />
+      <File FileName="Assets/Scripts/ScrPartition.cs" Line="51" Column="9" />
+      <File FileName="Assets/Scripts/ScrBody.cs" Line="5" Column="31" />
+      <File FileName="Assets/Scripts/ScrSlot.cs" Line="7" Column="5" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
