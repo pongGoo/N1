@@ -7,7 +7,7 @@ public class ScrMain : MonoBehaviour
 
     public int partitionColumnCount;
     public ScrPartition[,] partitions = new ScrPartition[4, 4];
-    // public GameObject[,] partitions = new GameObject[4,4];    
+    //public GameObject[,] partitions = new GameObject[4,4];    
     public Texture2D stageImage;    
     public GameObject boxBorder;
 
@@ -52,10 +52,11 @@ public class ScrMain : MonoBehaviour
         {
             for (int j = 0; j < ColumnCount; j++)
             {
-                //partitions[i, j] = new GameObject("partition" + i + "_" + j);
-                //partitions[i, j].gameObject = new GameObject("partition" + i + "_" + j);
-                partitions[i,j].ab
-                partitions[i, j].abcX = new GameObject("partition" + i + "_" + j);
+                partitions[i, j] = new ScrPartition();
+                partitions[i, j].Initiate(ColumnCount, partitionWidth, cameraWidth, stageImage, boxBorder, i, j);
+
+                /*
+                partitions[i, j] = new GameObject("partition" + i + "_" + j);
                 SpriteRenderer renderer = partitions[i, j].AddComponent<SpriteRenderer>();
                 renderer.sprite = Sprite.Create(stageImage, new Rect(i * partitionWidth * 100, (ColumnCount -1 - j) * partitionWidth * 100, partitionWidth*100, partitionWidth*100), new Vector2(0.5f, 0.5f), 100.0f);
                     GameObject border = Instantiate(boxBorder);
@@ -72,10 +73,16 @@ public class ScrMain : MonoBehaviour
                 // SpriteRenderer rendererBorder = partitions[i, j].AddComponent<SpriteRenderer>();
                 // renderer.sprite = Sprite.Create(borderImage, new Rect(0, 0, borderImage.width, borderImage.width), new Vector2(0.5f, 0.5f), 100.0f);
                 partitions[i, j].transform.position = new Vector2(-1*cameraWidth/2  + partitionWidth/2+ i * partitionWidth, 2  - j* partitionWidth);
+                */
+
+                if (i==ColumnCount-1 && j== ColumnCount-1-1)
+                {
+                    break;
+                }
 
             }
         }
-        Destroy(partitions[ColumnCount-1, ColumnCount-1]);
+        //Destroy(partitions[ColumnCount-1, ColumnCount-1]);
 
         // 확인 필요
         /*
