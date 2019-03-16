@@ -6,6 +6,7 @@ public class ScrPartition : MonoBehaviour
 {
     GameObject body;
     GameObject border;
+    ScrSlot scrSlot;
 
 
 
@@ -27,8 +28,9 @@ public class ScrPartition : MonoBehaviour
     }
 
 
-    public void Initiate(int columnCount, float partitionWidth, float cameraWidth, Texture2D stageImg, GameObject boxBorder, int i, int j  )
+    public void Initiate(int columnCount, float partitionWidth, float cameraWidth, Texture2D stageImg, GameObject boxBorder, int i, int j,ScrSlot scrSlot)
     {
+        
         body = new GameObject("body_" + i + "_" + j);
 
         body.AddComponent<ScrBody>();
@@ -49,41 +51,53 @@ public class ScrPartition : MonoBehaviour
 
 
 
-        body.transform.position = new Vector2(-1 * cameraWidth / 2 + partitionWidth / 2 + i * partitionWidth, 2 - j * partitionWidth);
-
+        //body.transform.position = new Vector2(-1 * cameraWidth / 2 + partitionWidth / 2 + i * partitionWidth, 2 - j * partitionWidth);
+        body.transform.position = scrSlot.GetSlotPosition();
 
     }
 
 
 
-    public void MoveToEmptySlot(GameObject targetObject, ScrEmptySlot emptySlot)
+    public void MoveToEmptySlot(GameObject targetObject, ScrSlot emptySlot)
     {
 
         if (IsNearEmptySlot(targetObject,emptySlot))
         {
             Debug.Log("IsNearEmptySlot");
+            Vector2 tempPosition = targetObject.transform.position;
+
+            targetObject.transform.position = emptySlot.GetSlotPosition();
+            emptySlot.SetSlotPosition(tempPosition.x, tempPosition.y);
+
+            int tempOrderX = targetObject.GetComponent<ScrBody>().orderX;
+            int tempOrderY = targetObject.GetComponent<ScrBody>().orderY;
+
+            targetObject.GetComponent<ScrBody>().orderX = emptySlot.GetOrderX();
+            targetObject.GetComponent<ScrBody>().orderY = emptySlot.GetOrderY();
+
+            emptySlot.SetOrder(tempOrderX, tempOrderY);
 
         }
 
     }
 
-    public bool IsNearEmptySlot(GameObject targetObject, ScrEmptySlot emptySlot)
+    public bool IsNearEmptySlot(GameObject targetObject, ScrSlot emptySlot)
     {
         bool isNear = false;
 
          ScrBody scrBody = targetObject.GetComponent<ScrBody>();
 
-         if (scrBody.positionX == emptySlot.emptyX)
+         if (scrBody.orderX == emptySlot.GetOrderX())
          {
-             int gap = scrBody.positionY - emptySlot.emptyY;
+             int gap = scrBody.orderY - emptySlot.GetOrderY();
              if (gap == 1 || gap == -1)
              {
                  isNear = true;
              }
          }
-         else if (scrBody.positionY == emptySlot.emptyY)
+         else if (scrBody.orderY == emptySlot.GetOrderY())
          {
-             int gap = scrBody.positionX - emptySlot.emptyX;
+             int gap = scrBody.orderX - emptySlot.GetOrderX();
              if (gap == 1 || gap == -1)
              {
                  isNear = true;

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ScrBody : MonoBehaviour
 {
-    public int positionX;
-    public int positionY;
+    public int orderX;
+    public int orderY;
 
 
 
@@ -25,8 +25,8 @@ public class ScrBody : MonoBehaviour
 
     public void SetPosition(int x, int y)
     {
-        positionX = x;
-        positionY = y;
+        orderX = x;
+        orderY = y;
     }
 
     /*

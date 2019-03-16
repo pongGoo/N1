@@ -4,27 +4,34 @@ using UnityEngine;
 
 public class ScrSlot : MonoBehaviour
 {
+    Vector2 position = new Vector2();
+    int orderX;
+    int orderY;
 
-
-
-    float positionX;
-    float positionY;
-
-    void SetSlotPosition(float x, float y)
+    public void SetSlotPosition(float x, float y)
     {
-        positionX = x;
-        positionY = y;
+        position = new Vector2(x, y);
     }
 
-    public float GetSlotPositionX()
+    public Vector2 GetSlotPosition()
     {
-        return positionX;
+        return position;
     }
 
-
-    public float GetSlotPositionY()
+    public void SetOrder(int x, int y)
     {
-        return positionY;
+        orderX = x;
+        orderY = y;
+    }
+
+    public int GetOrderX()
+    {
+        return orderX;
+    }
+
+    public int GetOrderY()
+    {
+        return orderY;
     }
 
     // Start is called before the first frame update

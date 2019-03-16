@@ -12,7 +12,7 @@ public class ScrMain : MonoBehaviour
     public GameObject boxBorder;
 
     public ScrSlot[,] scrSlots = new ScrSlot[4,4];
-    ScrEmptySlot emptySlot= new ScrEmptySlot();
+    ScrSlot emptySlot= new ScrSlot();
     float partitionWidth;
     float cameraWidth;
 
@@ -21,13 +21,24 @@ public class ScrMain : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetSlotPosition();
+        SetCameraWidth();
+        SetPartitionWidth(partitionColumnCount);
+
+        SetSlotPosition(partitionColumnCount);
         CreatePartition(partitionColumnCount);
     }
 
 
-    void SetSlotPosition()
+    void SetSlotPosition(int ColumnCount)
     {
+        for (int i = 0; i < ColumnCount; i++)
+        {
+            for (int j = 0; j < ColumnCount; j++)
+            {
+                scrSlots[i, j] = new ScrSlot();
+                scrSlots[i, j].SetSlotPosition(-1 * cameraWidth / 2 + partitionWidth / 2 + i * partitionWidth, 2 - j * partitionWidth);
+            }
+        }
 
     }
 
@@ -74,17 +85,14 @@ public class ScrMain : MonoBehaviour
     void CreatePartition (int ColumnCount)
     {
 
-        SetCameraWidth();
-        SetPartitionWidth(ColumnCount);
+        
 
         for (int i=0; i < ColumnCount; i++)
         {
             for (int j = 0; j < ColumnCount; j++)
             {
                 scrPartition = new ScrPartition();
-                scrPartition.Initiate(ColumnCount, partitionWidth, cameraWidth, stageImage, boxBorder, i, j);
-
-       
+                scrPartition.Initiate(ColumnCount, partitionWidth, cameraWidth, stageImage, boxBorder, i, j,scrSlots[i,j]);
 
                 if (i==ColumnCount-1 && j== ColumnCount-1-1)
                 {
@@ -94,7 +102,9 @@ public class ScrMain : MonoBehaviour
             }
         }
 
-        emptySlot.SetEmptySlot(ColumnCount - 1, ColumnCount - 1);
+        emptySlot.SetOrder(ColumnCount - 1, ColumnCount - 1);
+        emptySlot.SetSlotPosition(scrSlots[ColumnCount - 1, ColumnCount - 1].GetSlotPosition().x, scrSlots[ColumnCount - 1, ColumnCount - 1].GetSlotPosition().y);
+        //emptySlot.gets
 
     }
 

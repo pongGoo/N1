@@ -122,7 +122,6 @@ GameObject:
   m_Component:
   - component: {fileID: 477802528}
   - component: {fileID: 477802529}
-  - component: {fileID: 477802530}
   - component: {fileID: 477802531}
   m_Layer: 0
   m_Name: GameController
@@ -158,23 +157,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partitionColumnCount: 4
+  scrPartition: {fileID: 0}
   stageImage: {fileID: 2800000, guid: 147eebf4b55d3df4e987886ce95da6a4, type: 3}
   boxBorder: {fileID: 4376990222039335030, guid: 673829a0d0e078a4c8e5e1a7b092c17a,
     type: 3}
---- !u!114 &477802530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 477802527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cabc455d2b27f824fb15dd5ad6ab98d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  emptyX: 0
-  emptyY: 0
 --- !u!114 &477802531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,8 +173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0012d4f64d214db3bbc0068355e9fb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coordinateX: 0
-  coordinateY: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
