@@ -112,6 +112,20 @@ public class ScrPartition : MonoBehaviour
 
     }
 
+    public void Shuffle (int slotCount)
+    {
+        int slotCountMax;
+        List<int> slotWithPartition = new List<int>();
+
+        for (int i=0; i <slotCount; i++)
+        {
+
+        }
+
+
+
+    }
+
 
 
 }
